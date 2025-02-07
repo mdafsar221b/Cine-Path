@@ -17,7 +17,7 @@
 
   --breakpoint-xs: 480px;
 
-  --background-image-hero-pattern: url("/hero-bg.png");
+  --background-image-hero-pattern: url("./src/assets/bg.png");
 }
 
 @layer base {
@@ -54,7 +54,7 @@
   }
 
   .wrapper {
-    @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
+    @apply px-3 py-9 xs:p-10 max-w-5xl mx-auto flex flex-col relative z-10;
   }
 
   .trending {
