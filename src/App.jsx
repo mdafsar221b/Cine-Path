@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import Search from './components/Search';
+import MovieCard from './components/MovieCard';
 
 
 
@@ -72,6 +73,7 @@ const App = () => {
       <div className='pattern' >
       <div className='wrapper'>
         <header>
+           <h1>Cine-Path</h1>
           <img src="./src/assets/hero-img.png" alt="Hero-Banner" />
           <h1>
             Find <span className='text-gradient'>Movie </span> You'll Enjoy Without the Hassle
@@ -81,22 +83,11 @@ const App = () => {
         <section className='all-movies'>
           <h2>Popular Movies</h2>
           <ul>
-             
-             {movieList.map((movie) => (
-              
-              <div key={movie.id} className='movie-card flex flex-col justify-between'>
-                <img src={movie.primaryImage} alt="" />
-                <h3 className='text-white'>{movie.originalTitle}</h3>
-                <div>
-                  <p className='text-white py-0.5'> Year : {movie.startYear}</p>
-                  <p className='text-white py-0.5'> Lan : {movie.language}</p>
-                </div>
+              {movieList.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </ul>
 
-              </div>
-               
-             ))}
-           </ul>
-         
          {isloading ? (
           <p className='text-white'> Loading......</p>
          ):errorMessage ?(
