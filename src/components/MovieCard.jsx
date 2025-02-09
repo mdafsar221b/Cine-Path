@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MovieCard = ({ movie:
+const MovieCard = ({ List:
   { primaryTitle, averageRating, primaryImage, startYear, runtimeMinutes,url}
 }) => {
  
@@ -10,7 +10,7 @@ const MovieCard = ({ movie:
   return (
     <div className="movie-card cursor-pointer" onClick={handleClick}>
       <img
-        src={primaryImage ?primaryImage : '/No-Poster.png'}
+        src={primaryImage ? primaryImage : 'src\assets\No-Poster.png'}
         alt={primaryTitle}
       />
 
