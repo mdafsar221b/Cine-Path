@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
-// import Search from './components/Search';
+import Search from './components/Search';
 import MovieCard from './components/MovieCard';
 import Loader from './components/loader';
+import {useDebounce} from 'react-use';
+//import Buttons from './components/Buttons';
 
-const BASE_URL = 'https://imdb236.p.rapidapi.com/imdb/most-popular';
+// const TOP_POPULAR_MOVIE = 'https://imdb236.p.rapidapi.com/imdb/most-popular-movies';
+// const SEARCH_URL= 'https://imdb236.p.rapidapi.com/imdb/autocomplete?query=batman'
+// const TOP_RATED_INDIAN= 'const url = 'https://imdb236.p.rapidapi.com/imdb/india/top-rated-indian-movies';'
+// https://imdb236.p.rapidapi.com/imdb/
+const BASE_URL = 'https://imdb236.p.rapidapi.com/imdb/';
+
 const options = {
   method: 'GET',
   headers: {
@@ -12,23 +19,44 @@ const options = {
   }
 };
 
-const App = () => {
-  const [endpoint, setEndpoint] = useState(`${BASE_URL}-tv`);
+const App = () => { 
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [List, setList] = useState([]);
-  const [isloading, setIsLoading] = useState(false);
+  const [apiCallCount, setApiCallCount] = useState(() => {
+    const savedCount = localStorage.getItem('apiCallCount');
+    return savedCount ? JSON.parse(savedCount) : 0;
+  }); // Initialize counter from local storage
 
-  const fetchData = async () => {
+
+  const [isloading, setIsLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 2000, [searchTerm])
+
+  const fetchData = async (query='') => {
     setIsLoading(true);
+    setApiCallCount(prevCount => {
+        const newCount = prevCount + 1; // Increment the API call counter
+        localStorage.setItem('apiCallCount', JSON.stringify(newCount)); // Save to local storage
+        return newCount;
+    });
+
     setErrorMessage('');
 
     try {
-      const response = await fetch(endpoint, options);
+      // setEndpoint(query ? `${BASE_URL}autocomplete?query=${encodeURIComponent(query)}` : `${BASE_URL}most-popular-movies`);
+      
+      const endpoint = query ? 
+        `${BASE_URL}autocomplete?query=${encodeURIComponent(query)}` 
+      : `${BASE_URL}most-popular-movies`;
+
+       const response = await fetch(endpoint, options);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const data = await response.json();
+      const data = await response.json(); // Change to text to log the response
+      console.log(data); // Log the response to see what is returned
       console.log(data);
 
       if (data.response === 'false') {
@@ -46,36 +74,27 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [endpoint]); // Fetch data whenever the endpoint changes
+    fetchData(debouncedSearchTerm);
+  }, [debouncedSearchTerm]); // Fetch data whenever the SearchTerm changes
 
-  const handleClick = () => {
-    if (endpoint === `${BASE_URL}-tv`) {
-      setEndpoint(`${BASE_URL}-movies`);
-    } else {
-      setEndpoint(`${BASE_URL}-tv`);
-    }
-  };
-
-  return (
+    return (
     <main>
       <div className='pattern'>
         <div className='wrapper'>
           <header>
             <img className='w-[300px]' src="src/assets/logo.png" alt="logo" />
             <img src="./src/assets/hero-img.png" alt="Hero-Banner" />
-            <h1>
-              Find <span className='text-gradient'>Movie </span> You'll Enjoy Without the Hassle
+            <h1> 
+
+              Find <span className='text-gradient'>Movie & TV Shows </span> You'll Enjoy Without the Hassle 
+
             </h1>
-            {/* <Search /> */}
+            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </header>
-
-          <button className='search text-white cursor-pointer' onClick={handleClick}>
-            { isloading? (<Loader/>) :(endpoint === `${BASE_URL}-tv` ? 'Show Movies' : 'Show TV Shows') } 
-          </button>
-
           <section className='all-movies'> 
-            <h2 className='pt-5'>Trending {endpoint === `${BASE_URL}-tv` ? ' TV Shows' : ' Movies'}</h2>
+            <h2 className='pt-5'>Trending Movies</h2>
+            <h2 className='pt-5'> API Call Counter : {apiCallCount}</h2>
+
             <ul>
               {List.map((List) => (
                 <MovieCard key={List.id} List={List} />

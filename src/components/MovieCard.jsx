@@ -1,14 +1,14 @@
 import React from 'react'
 
 const MovieCard = ({ List:
-  { primaryTitle, averageRating, primaryImage, startYear, runtimeMinutes,url,spokenLanguages}
+  { primaryTitle, averageRating, primaryImage, startYear,url,spokenLanguages}
 }) => {
     
     const handleClick = () => {
       window.open(url, "_blank"); 
     };
   return (
-    <div className="movie-card cursor-pointer" onClick={handleClick}>
+    <div className="movie-card cursor-pointer hover:transition hover:duration-700 hover:ease-in-out " onClick={handleClick}>
       <img
         src={primaryImage ? primaryImage : 'src\assets\No-Poster.png'}
         alt={primaryTitle}
@@ -25,7 +25,7 @@ const MovieCard = ({ List:
           </div>
 
           <span>•</span>
-         <p className='year'>{spokenLanguages? `${JSON.stringify(spokenLanguages[0]).toUpperCase()} ${spokenLanguages[1]?JSON.stringify(spokenLanguages[1]).toUpperCase():''}`: 'N/A'}</p>
+         <p className='year'>{spokenLanguages? `${JSON.stringify(spokenLanguages[0]).toUpperCase()}`: 'N/A'}</p>
 
           <span>•</span>
           <p className="year">
