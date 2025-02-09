@@ -5,7 +5,7 @@ const MovieCard = ({ List:
 }) => {
     
     const handleClick = () => {
-      window.open(url, "_blank"); 
+      window.open(primaryImage, "_blank"); 
     };
   return (
     <div className="movie-card cursor-pointer hover:transition hover:duration-700 hover:ease-in-out " onClick={handleClick}>

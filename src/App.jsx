@@ -14,7 +14,7 @@ const BASE_URL = 'https://imdb236.p.rapidapi.com/imdb/';
 const options = {
   method: 'GET',
   headers: {
-    'x-rapidapi-key': '0c1683b310mshe96ed35887ff7dcp14b057jsn08e315a7a60c',
+    'x-rapidapi-key': 'ca8f913189msh2781c5c5e6deeb7p15c067jsn5a4bfb115860',
     'x-rapidapi-host': 'imdb236.p.rapidapi.com'
   }
 };
@@ -56,8 +56,7 @@ const App = () => {
         throw new Error('Failed to fetch data');
       }
       const data = await response.json(); // Change to text to log the response
-      console.log(data); // Log the response to see what is returned
-      console.log(data);
+      console.log(data); // Log the response to see what is returne
 
       if (data.response === 'false') {
         setErrorMessage(data.error || 'Failed to fetch movies');
@@ -93,7 +92,9 @@ const App = () => {
           </header>
           <section className='all-movies'> 
             <h2 className='pt-5'>Trending Movies</h2>
-            <h2 className='pt-5'> API Call Counter : {apiCallCount}</h2>
+            <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                 <span className="font-medium">Numbers of API Calls Made : </span>{apiCallCount}
+                      </div>
 
             <ul>
               {List.map((List) => (
