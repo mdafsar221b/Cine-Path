@@ -1,10 +1,14 @@
 import React from 'react'
 
 const MovieCard = ({ movie:
-  { primaryTitle, averageRating, primaryImage, startYear, spokenLanguages}
+  { primaryTitle, averageRating, primaryImage, startYear, runtimeMinutes,url}
 }) => {
+ 
+    const handleClick = () => {
+      window.open(url, "_blank"); 
+    };
   return (
-    <div className="movie-card">
+    <div className="movie-card cursor-pointer" onClick={handleClick}>
       <img
         src={primaryImage ?primaryImage : '/No-Poster.png'}
         alt={primaryTitle}
@@ -21,7 +25,7 @@ const MovieCard = ({ movie:
           </div>
 
           <span>•</span>
-          <p className="lang">{spokenLanguages}</p>
+         <p className='year'>{runtimeMinutes? `${(runtimeMinutes/60).toFixed(1)}hr`:'N/A'}</p>
 
           <span>•</span>
           <p className="year">

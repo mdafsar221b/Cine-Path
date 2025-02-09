@@ -73,7 +73,7 @@ const App = () => {
       <div className='pattern' >
       <div className='wrapper'>
         <header>
-           <h1>Cine-Path</h1>
+          <img className='w-[300px]' src="src\assets\logo.png" alt="logo" />
           <img src="./src/assets/hero-img.png" alt="Hero-Banner" />
           <h1>
             Find <span className='text-gradient'>Movie </span> You'll Enjoy Without the Hassle
