@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Search from './components/Search';
+// import Search from './components/Search';
 import MovieCard from './components/MovieCard';
-import loader from './components/loader';
+import Loader from './components/loader';
 
 const BASE_URL = 'https://imdb236.p.rapidapi.com/imdb/most-popular';
 const options = {
@@ -71,10 +71,10 @@ const App = () => {
           </header>
 
           <button className='search text-white cursor-pointer' onClick={handleClick}>
-            {endpoint === `${BASE_URL}-tv` ? 'Show Movies' : 'Show TV Shows'}
+            { isloading? (<Loader/>) :(endpoint === `${BASE_URL}-tv` ? 'Show Movies' : 'Show TV Shows') } 
           </button>
 
-          <section className='all-movies'>
+          <section className='all-movies'> 
             <h2 className='pt-5'>Trending {endpoint === `${BASE_URL}-tv` ? ' TV Shows' : ' Movies'}</h2>
             <ul>
               {List.map((List) => (
@@ -83,7 +83,7 @@ const App = () => {
             </ul>
 
             {isloading ? (
-              <p className='text-white'> Loading......</p>
+              <Loader/>
             ) : errorMessage ? (
               <p className='text-red-500'>{errorMessage}</p>
             ) : (
