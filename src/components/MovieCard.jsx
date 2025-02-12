@@ -10,7 +10,7 @@ const MovieCard = ({ List:
   return (
     <div className="movie-card cursor-pointer hover:transition hover:duration-700 hover:ease-in-out " onClick={handleClick}>
       <img
-        src={primaryImage ? primaryImage : 'src\assets\No-Poster.png'}
+        src={primaryImage ? primaryImage :"./src/assets/No-Poster.png"}
         alt={primaryTitle}
       />
 
